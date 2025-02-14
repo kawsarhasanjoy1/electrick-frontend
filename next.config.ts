@@ -1,7 +1,14 @@
-import type { NextConfig } from "next";
+import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    domains: ["cf-sparkai-live.s3.amazonaws.com"],
+    remotePatterns: [
+      {
+        hostname: "**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
