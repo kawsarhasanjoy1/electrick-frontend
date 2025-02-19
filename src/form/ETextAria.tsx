@@ -8,13 +8,20 @@ type EInput = {
   required?: boolean;
   label: string;
 };
-const EInput = ({ name, type, placeholder, edit, required, label }: EInput) => {
+const ETextAria = ({
+  name,
+  type,
+  placeholder,
+  edit,
+  required,
+  label,
+}: EInput) => {
   const { control } = useFormContext();
   return (
     <div>
       <label
         htmlFor={name}
-        className={`block text-sm font-medium mb-1 ${edit}`}
+        className={`block text-gray-600`}
       >
         {label}
         {required && <span className="text-red-500"> *</span>}
@@ -24,13 +31,12 @@ const EInput = ({ name, type, placeholder, edit, required, label }: EInput) => {
         control={control}
         render={({ field, fieldState: { error } }) => (
           <div>
-            <input
+            <textarea
               {...field}
               id={name}
-              value={field?.value ?? ''}
-              type={type}
+              rows={4}
               required={required ? required : false}
-              className={` border border-blue-500 outline-none h-10 px-3 rounded-md text-gray-600 w-full`}
+              className={` border border-blue-500 outline-none h-24 w-full mt-2 px-3 rounded-md text-gray-600 py-3 px-6`}
               placeholder={placeholder}
             />
             <p>{error?.message}</p>
@@ -41,4 +47,4 @@ const EInput = ({ name, type, placeholder, edit, required, label }: EInput) => {
   );
 };
 
-export default EInput;
+export default ETextAria;

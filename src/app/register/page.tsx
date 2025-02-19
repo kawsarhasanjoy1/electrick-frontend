@@ -17,7 +17,7 @@ const page = () => {
             <div className="text-center">
               <h1 className="text-3xl font-bold text-gray-800">Welcome Back</h1>
               <div className="mt-2 text-sm text-gray-600 flex justify-center">
-                <Image src={image} width={150} height={150} alt="" />
+                <Image priority src={image} width={150} height={150} alt="" />
               </div>
             </div>
 

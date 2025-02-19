@@ -16,6 +16,7 @@ const TrendingProductCard = ({ product, variant }: any) => {
       }`}
     >
       <Image
+        priority
         height={400}
         width={400}
         src={product.image}

@@ -20,7 +20,19 @@ const productApi = baseApi.injectEndpoints({
         };
       },
     }),
+    fetchSingleProduct: build.query({
+      query: (productId) => {
+        return {
+          url: `products/fetch-product/${productId}`,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
-export const { useCreateProductMutation, useFetchProductsQuery } = productApi;
+export const {
+  useCreateProductMutation,
+  useFetchProductsQuery,
+  useFetchSingleProductQuery,
+} = productApi;

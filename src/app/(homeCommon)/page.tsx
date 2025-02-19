@@ -6,8 +6,7 @@ import SpecialDeals from "@/component/Home/SpecialDeals";
 import TopSelling from "@/component/Home/TopSelling";
 import UpcomingProducts from "@/component/Home/UpComingProduct";
 import About from "@/component/About/About";
-import ReviewCarousel from "@/component/ui/Review/Reviews";
-
+import Reviews from "@/component/ui/Review/Reviews";
 
 const page = () => {
   return (
@@ -21,8 +20,8 @@ const page = () => {
           <TrendingProduct />
           <SpecialDeals />
           <UpcomingProducts />
-          <About/>
-          <ReviewCarousel />
+          <About />
+          <Reviews />
         </div>
       </div>
     </div>

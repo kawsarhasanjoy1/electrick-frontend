@@ -49,6 +49,7 @@ const BrandOfSupport = () => {
                   alt={brand.name}
                   width={50}
                   height={50}
+                  priority
                   className="h-16 w-16 object-contain"
                 />
                 <h4 className="font-semibold text-lg text-gray-800 dark:text-white mt-2">

@@ -2,6 +2,8 @@
 
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { Key } from "react";
+import Link from "next/link";
 
 const CommonBanner = ({
   title,
@@ -11,13 +13,14 @@ const CommonBanner = ({
   bgImage: string;
 }) => {
   const pathname = usePathname();
-  const pathSegments = pathname.split("/").filter((segment) => segment);
+  const pathSegments = pathname.split("/")?.[1];
 
   return (
     <div className="relative h-[300px] md:h-[450px] flex items-center justify-center text-white">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
+          priority
           src={bgImage}
           alt="Banner Background"
           layout="fill"
@@ -43,17 +46,10 @@ const CommonBanner = ({
                 Home
               </a>
             </li>
-            {pathSegments.map((segment, index) => (
-              <li key={index} className="flex items-center">
-                <span className="mx-2">/</span>
-                <a
-                  href={`/${segment}`}
-                  className="hover:text-white capitalize transition duration-300"
-                >
-                  {segment.replace("-", " ")}
-                </a>
-              </li>
-            ))}
+            <li className="flex items-center">
+              <span className="mx-2">/</span>
+              <Link href={`/${pathSegments}`}>{pathSegments}</Link>
+            </li>
           </ul>
         </nav>
       </div>

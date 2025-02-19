@@ -38,6 +38,7 @@ const UpcomingProducts = () => {
                 src={product.image}
                 alt={product.name}
                 width={350}
+                priority
                 height={350}
                 className="md:w-1/2 w-full h-60 object-cover"
               />

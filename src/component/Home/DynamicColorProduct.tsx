@@ -60,6 +60,7 @@ const DynamicColorProduct = () => {
             <Image
               className="relative w-40 h-28"
               height={100}
+              priority
               width={100}
               src={display.image}
               alt={display.name}

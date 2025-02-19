@@ -115,7 +115,8 @@ const Banner = () => {
                     alt="Premium LCD Display"
                     width={910}
                     height={700}
-                   quality={100}
+                    quality={100}
+                    priority
                     className="transition-transform duration-300 ease-in-out hover:scale-105 h-[400px] w-[600px]"
                   />
                 </motion.div>

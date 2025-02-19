@@ -1,8 +1,6 @@
-import { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
-    domains: ["cf-sparkai-live.s3.amazonaws.com"],
     remotePatterns: [
       {
         hostname: "**",
@@ -11,4 +9,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;

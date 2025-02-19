@@ -17,6 +17,7 @@ const AboutUs = () => {
       <div className="flex flex-col md:flex-row items-center gap-12 rounded-xl ">
         <div className=" relative">
           <Image
+            priority
             src={samLcd}
             width={500}
             height={300}

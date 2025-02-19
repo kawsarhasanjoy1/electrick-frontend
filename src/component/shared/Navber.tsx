@@ -19,6 +19,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link href={"/"}>
           <Image
+            priority
             className=" text-white"
             height={150}
             width={150}

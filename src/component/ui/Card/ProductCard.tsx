@@ -2,7 +2,8 @@ import { Rating } from "@smastrom/react-rating";
 import Image from "next/image";
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
-import "@smastrom/react-rating/style.css"
+
+import Link from "next/link";
 const ProductCard = ({ product }: any) => {
   let discountParsent;
   const price = product?.price;
@@ -26,6 +27,7 @@ const ProductCard = ({ product }: any) => {
         )}
       </div>
       <Image
+        priority
         width={300}
         height={300}
         src={product?.image}
@@ -79,9 +81,9 @@ const ProductCard = ({ product }: any) => {
           </span>
         </div>
         <div className="mt-auto ">
-          <button className="bg-blue-500 text-[10px] uppercase text-white py-2 px-4 w-full font-bold flex gap-2 justify-center items-center">
+          <Link href={`/products/${product?._id}`} className="bg-blue-500 text-[10px] uppercase text-white py-2 px-4 w-full font-bold flex gap-2 justify-center items-center">
             View Details <FaArrowRight />
-          </button>
+          </Link>
         </div>
       </div>
     </div>

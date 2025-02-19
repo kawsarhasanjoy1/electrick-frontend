@@ -17,6 +17,7 @@ const Footer = () => {
           <div>
             <Link href="/" className="flex items-center mb-4">
               <Image
+                priority
                 src={logo.trim()}
                 alt="Logo"
                 height={150}
