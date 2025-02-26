@@ -3,13 +3,13 @@ import { Controller, useFormContext } from "react-hook-form";
 
 type EInputProps = {
   name: string;
-  type: string;
   placeholder?: string;
   edit?: string;
   required?: boolean;
   label: string;
-  options?: any[]; // Only for select dropdown
-  onChange?: any;
+  options?: (string | number)[];
+  onChange?: (value: string | string[]) => void;
+  multiple?: boolean;
 };
 
 const ESelect = ({
@@ -17,8 +17,9 @@ const ESelect = ({
   edit,
   required,
   label,
-  options,
+  options = [],
   onChange,
+  multiple = false,
 }: EInputProps) => {
   const { control } = useFormContext();
 
@@ -34,19 +35,21 @@ const ESelect = ({
       <Controller
         name={name}
         control={control}
-        render={({ field, fieldState: { error } }) => (
+        render={({ field }) => (
           <select
+            multiple={multiple}
             {...field}
-            onChange={(e) => {
-              field.onChange(e.target.value);
-              if (onChange) onChange(e.target.value);
-            }}
             id={name}
+            value={field.value} 
             className="border border-blue-500 outline-none h-10 px-3 rounded-md text-gray-600 w-full"
           >
             <option value="">Select an option</option>
-            {options?.map((option) => (
-              <option className=" uppercase text-sm" key={option} value={option}>
+            {options.map((option) => (
+              <option 
+                className="uppercase text-sm" 
+                key={option} 
+                value={option}
+              >
                 {option}
               </option>
             ))}

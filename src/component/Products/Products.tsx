@@ -6,6 +6,7 @@ import Filtering from "../ui/Filtering/Filtering";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FieldValues } from "react-hook-form";
 import NotFound from "../ui/NotFound/NotFound";
+import Loading from "@/app/loading";
 
 const Products = () => {
   const router = useRouter();
@@ -15,8 +16,10 @@ const Products = () => {
     filters[key] = value;
   });
 
-  const { data } = useFetchProductsQuery(filters);
-
+  const { data, isLoading } = useFetchProductsQuery(filters);
+  if (isLoading) {
+    return <Loading />;
+  }
   const products = data?.data?.result;
   const handleToSort = (e: FieldValues) => {
     const sortValue = e?.target?.value;
@@ -83,7 +86,7 @@ const Products = () => {
         ) : (
           <div className=" grid col-span-9">
             {" "}
-            <NotFound link={'/products'} />
+            <NotFound link={"/products"} />
           </div>
         )}
       </div>

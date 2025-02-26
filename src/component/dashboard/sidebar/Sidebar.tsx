@@ -1,17 +1,18 @@
 "use client";
-import { USER_ROLE } from "@/constance/global";
 import SidebarItem from "@/utils/SidebarItem";
+import useAuth from "@/utils/useAuth";
 import Link from "next/link";
 import React, { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { CiSettings } from "react-icons/ci";
 import { FaBars } from "react-icons/fa";
-import { HiMenu, HiX } from "react-icons/hi";
+import { HiX } from "react-icons/hi";
 import { IoLogOutOutline } from "react-icons/io5";
 
 const Sidebar = () => {
   const [isToggle, setIsToggle] = useState(false);
-  const item = SidebarItem(USER_ROLE.superAdmin);
+  const { user } = useAuth();
+  const item = SidebarItem(user?.role);
 
   return (
     <div>
@@ -45,7 +46,7 @@ const Sidebar = () => {
 
           {/* Sidebar Header */}
           <div className="flex items-center justify-center h-14 border-b">
-            <div>Admin Dashboard</div>
+            <span className=" uppercase font-bold">{user?.role} Dashboard</span>
           </div>
 
           {/* Scrollable Sidebar Content */}
@@ -54,7 +55,7 @@ const Sidebar = () => {
               {item?.map((Item, index) => (
                 <li key={index}>
                   <Link
-                    href={`dashboard/${Item?.path}`}
+                    href={`/dashboard/${Item?.path}`}
                     className="relative flex items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
                   >
                     <div className="inline-flex justify-center items-center ml-4">

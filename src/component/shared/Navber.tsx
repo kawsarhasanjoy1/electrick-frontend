@@ -11,6 +11,7 @@ import { SlLogin } from "react-icons/sl";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, token } = useAuth();
+  console.log(user);
   const toggleMenu = () => setIsOpen(!isOpen);
   const isLogin = false;
   return (
@@ -53,6 +54,12 @@ const Navbar = () => {
 
             <Link href="/contact" className="hover:text-gray-300 transition">
               Contact Us
+            </Link>
+            <Link
+              href={`/dashboard/${user?.role}`}
+              className="hover:text-gray-300 transition"
+            >
+              Dashboard
             </Link>
           </div>
         </nav>

@@ -12,8 +12,7 @@ type TEform = {
   defaultValues?: Record<string, any>;
 };
 const EFrom = ({ children, onSubmit, resolver, defaultValues }: TEform) => {
-  console.log(defaultValues)
-  const methods = useForm({defaultValues});
+  const methods = useForm({ defaultValues: defaultValues || {} });
   const { handleSubmit } = methods;
 
   return (

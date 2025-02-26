@@ -8,7 +8,7 @@ export default function TrendingProduct() {
   const filter = {
     sort: "-ratingAverage",
   };
-  const { data } = useFetchProductsQuery(filter);
+  const { data, isLoading } = useFetchProductsQuery(filter);
   const products = data?.data?.result || [];
 
   return (

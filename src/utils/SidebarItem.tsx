@@ -1,6 +1,7 @@
 import { USER_ROLE } from "@/constance/global";
 import React from "react";
 import { FaMicroblog, FaUsers } from "react-icons/fa";
+import { GoCodeReview } from "react-icons/go";
 import {
   MdOutlineAddShoppingCart,
   MdOutlineDashboard,
@@ -55,6 +56,11 @@ const SidebarItem = (role: any) => {
           title: "Users",
           path: `/${role}/users`,
           icon: FaUsers,
+        },
+        {
+          title: "Reviews",
+          path: `/${role}/reviews`,
+          icon: GoCodeReview,
         },
         {
           title: "Blogs",

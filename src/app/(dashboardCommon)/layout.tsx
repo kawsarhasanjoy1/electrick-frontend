@@ -8,7 +8,7 @@ const layout = ({ children }: Children) => {
       <div className=" grid col-span-2">
         <Sidebar />
       </div>
-      <div className=" grid col-span-10 px-10">{children}</div>
+      <div className=" grid col-span-10 md:px-10">{children}</div>
     </div>
   );
 };

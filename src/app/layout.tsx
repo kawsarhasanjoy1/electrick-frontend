@@ -4,7 +4,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/Provider/ReduxProvider";
 import { Toaster } from "sonner";
-import "@smastrom/react-rating/style.css"
+import "@smastrom/react-rating/style.css";
+import { Suspense } from "react";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -32,7 +33,7 @@ export default function RootLayout({
       >
         <ReduxProvider>
           <Toaster />
-          {children}
+          <Suspense fallback={<p className=" text-xl font-bold text-black">loading....</p>}>{children}</Suspense>
         </ReduxProvider>
       </body>
     </html>

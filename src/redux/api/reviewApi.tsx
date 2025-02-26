@@ -12,13 +12,28 @@ const reviewApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.review],
     }),
     fetchReviews: build.query({
-      query: () => ({
-        url: "reviews/fetch-reviews",
-        method: "GET",
-      }),
+      query: (filters) => {
+        const query = new URLSearchParams(filters).toString();
+        return {
+          url: `reviews/fetch-reviews?${query}`,
+          method: "GET",
+        };
+      },
       providesTags: [tagTypes.review],
+    }),
+    softDeleteReviews: build.mutation({
+      query: ({ data, userId }) => ({
+        url: `reviews/soft-delete/${userId}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.review],
     }),
   }),
 });
 
-export const { useCreateReviewMutation, useFetchReviewsQuery } = reviewApi;
+export const {
+  useCreateReviewMutation,
+  useFetchReviewsQuery,
+  useSoftDeleteReviewsMutation,
+} = reviewApi;

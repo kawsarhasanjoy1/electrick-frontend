@@ -12,33 +12,38 @@ import EFrom from "@/form/EFrom";
 import EInput from "@/form/EInput";
 import ESelect from "@/form/ESelect";
 import MultiSelect from "@/form/MultiSelect";
-import { useCreateProductMutation } from "@/redux/api/productApi";
+import { useUpdateProductMutation } from "@/redux/api/productApi";
 import { useAppSelector } from "@/redux/hook";
 import { TProduct } from "@/types/global";
-import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { HiX } from "react-icons/hi";
 import { toast } from "sonner";
 
-const AddProductModal = ({
+const UpProductModal = ({
   isOpen,
   setIsOpen,
+  defaultValue,
 }: {
   isOpen: boolean;
   setIsOpen: any;
+  defaultValue?: Partial<TProduct>;
 }) => {
-  const [selectCategory, setSelectedCategory] = useState("");
   const { userId } = useAppSelector((store) => store?.auth?.user);
   const category = lcdCategories?.map((category) => category?.name);
-  const [createProduct] = useCreateProductMutation();
+  const [productUpdate] = useUpdateProductMutation();
   const HandleToSubmit = async (e: FieldValues) => {
-    const features = e?.features?.map((item: Record<string, string>) => ({
-      name: item?.value,
-    }));
+    const productId = defaultValue?._id as string;
+    // const features = e?.features?.map((item: Record<string, string>) => ({
+    //   name: item?.value,
+    // }));
 
     try {
-      const displayData = { ...e, features, userId };
-      const res = await createProduct(displayData).unwrap();
+      const displayData = { ...e };
+      const res = await productUpdate({
+        data: displayData,
+        productId,
+      }).unwrap();
+
       if (res?.success) {
         toast.success(res?.message);
       } else {
@@ -66,7 +71,7 @@ const AddProductModal = ({
             </button>
           </div>
 
-          <EFrom onSubmit={HandleToSubmit}>
+          <EFrom defaultValues={defaultValue} onSubmit={HandleToSubmit}>
             <div className="overflow-y-auto max-h-[60vh] grid md:grid-cols-2 justify-center items-center gap-4">
               <EInput
                 name="name"
@@ -122,7 +127,7 @@ const AddProductModal = ({
                 name="category"
                 label="Category"
                 options={category}
-                onChange={(selected: any) => setSelectedCategory(selected)}
+                // onChange={(selected: any) => setSelectedCategory(selected)}
                 required
               />
               <ESelect
@@ -148,19 +153,19 @@ const AddProductModal = ({
               {/* Display Type Field */}
               <ESelect
                 options={
-                  selectCategory === "mobile"
+                  defaultValue?.category === "mobile"
                     ? lcdTypes.mobile
-                    : selectCategory === "laptop"
+                    : defaultValue?.category === "laptop"
                     ? lcdTypes.led
-                    : selectCategory === "tv"
+                    : defaultValue?.category === "tv"
                     ? lcdTypes.tv
-                    : selectCategory === "tablet"
+                    : defaultValue?.category === "tablet"
                     ? lcdTypes.tablet
-                    : selectCategory === "monitor"
+                    : defaultValue?.category === "monitor"
                     ? lcdTypes.monitor
-                    : selectCategory === "smartwatch"
+                    : defaultValue?.category === "smartwatch"
                     ? lcdTypes.smartwatch
-                    : selectCategory === "iphone"
+                    : defaultValue?.category === "iphone"
                     ? lcdTypes.iphone
                     : []
                 }
@@ -189,7 +194,9 @@ const AddProductModal = ({
               />
 
               {/* Features Field (Newly Added) */}
-              <MultiSelect category={selectCategory} />
+              <MultiSelect
+                category={defaultValue?.category ? defaultValue?.category : ""}
+              />
             </div>
 
             {/* Modal Footer */}
@@ -215,4 +222,4 @@ const AddProductModal = ({
   );
 };
 
-export default AddProductModal;
+export default UpProductModal;

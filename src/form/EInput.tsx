@@ -27,7 +27,7 @@ const EInput = ({ name, type, placeholder, edit, required, label }: EInput) => {
             <input
               {...field}
               id={name}
-              value={field?.value ?? ''}
+              value={field?.value ?? ""}
               type={type}
               required={required ? required : false}
               className={` border border-blue-500 outline-none h-10 px-3 rounded-md text-gray-600 w-full`}
