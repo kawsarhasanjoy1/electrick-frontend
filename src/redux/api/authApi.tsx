@@ -18,10 +18,13 @@ const authApi = baseApi.injectEndpoints({
       }),
     }),
     fetchAllUser: build.query({
-      query: () => ({
-        url: "users/fetch-users",
-        method: "GET",
-      }),
+      query: (filters) => {
+        const query = new URLSearchParams(filters).toString();
+        return {
+          url: `users/fetch-users?${query}`,
+          method: "GET",
+        };
+      },
       providesTags: [tagTypes.user],
     }),
     blockUser: build.mutation({

@@ -3,20 +3,45 @@ import Loading from "@/app/loading";
 import AddProductModel from "@/component/Model/AddProductModel";
 import ProductTable from "@/component/Table/ProductTable";
 import NotFound from "@/component/ui/NotFound/NotFound";
+import Pagination from "@/component/ui/QueryBuilders/Pagination";
+import Searching from "@/component/ui/QueryBuilders/Searching";
+import Sorting from "@/component/ui/QueryBuilders/Shorting";
+import { sortProducts } from "@/constance/global";
 import { useFetchProductsQuery } from "@/redux/api/productApi";
 import { TProduct } from "@/types/global";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 
 const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { data, isLoading, isError } = useFetchProductsQuery(undefined);
+  const filters: Record<string, any> = {};
+  console.log(filters);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  searchParams?.forEach((value, key) => {
+    filters[key] = value;
+  });
+  const limit = 5;
+  const currentPage = Number(searchParams.get("page") || 1);
+  const { data, isLoading, isError } = useFetchProductsQuery({...filters, limit});
+  const totalProducts = data?.data?.meta?.total;
+  const totalPages = Math.ceil(totalProducts / limit);
   const product = data?.data?.result;
+  const updateParams = (key: string, value: any) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value) {
+      params.set(key, value);
+    } else {
+      params.delete(key);
+    }
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
   if (isLoading) {
     return <Loading />;
   }
   return (
-    <div className="max-w-[100vw] space-y-5">
-      <div className="w-full md:max-w-screen-lg border flex justify-between items-center ">
+    <div className="max-w-[100vw] space-y-5 mt-6">
+      <div className="w-full md:max-w-screen-lg  flex justify-between items-center ">
         <p className="text-xl font-bold">Products</p>
 
         <button
@@ -29,6 +54,15 @@ const Page = () => {
       </div>
 
       <AddProductModel setIsOpen={setIsOpen} isOpen={isOpen} />
+      <div className="flex justify-between items-center mb-4 md:max-w-screen-lg">
+        <Searching
+          onSearch={(value: any) => updateParams("searchTerm", value)}
+        />
+        <Sorting
+          sort={sortProducts}
+          onSort={(value) => updateParams("sort", value)}
+        />
+      </div>
       {product?.length > 0 ? (
         <div className="w-full overflow-x-auto">
           <table className="w-full min-w-[900px] bg-white border border-gray-200 rounded-lg shadow-md">
@@ -57,6 +91,13 @@ const Page = () => {
               ))}
             </tbody>
           </table>
+          <div className=" md:max-w-screen-lg">
+            <Pagination
+              currentPage={currentPage}
+              onPageChange={(page) => updateParams("page", page.toString())}
+              totalPages={totalPages}
+            />
+          </div>
         </div>
       ) : (
         <NotFound link="/dashboard/admin/products" />

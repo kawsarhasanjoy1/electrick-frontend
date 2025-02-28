@@ -1,3 +1,4 @@
+"use client";
 import { Rating } from "@smastrom/react-rating";
 import Image from "next/image";
 import { AiOutlineCheckCircle } from "react-icons/ai";
@@ -10,8 +11,10 @@ import AddReview from "../Review/AddReveiw";
 import DetailsReview from "../Review/DetailsReview";
 import SelectButton from "../Button/SelectButton";
 import ReviewCarousel from "../Review/ReviewCarousel";
+import { useAppSelector } from "@/redux/hook";
 
 const ProductDetails = ({ product, refetch }: any) => {
+  const { userId, email } = useAppSelector((store) => store.auth.user);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
   const handleToQuantity = (e: string) => {
@@ -23,7 +26,21 @@ const ProductDetails = ({ product, refetch }: any) => {
       setQuantity(quantity - 1);
     }
   };
-
+  const HandleToCart = (product: any) => {
+    const price =
+      (product?.discountPrice ? product?.discountPrice : product?.price) *
+      quantity;
+    console.log(price);
+    const cardData = {
+      productId: product?._id,
+      userId,
+      email,
+      category: product?.category,
+      brand: product?.brand,
+      totalPrice: price,
+    };
+    
+  };
   return (
     <div>
       <div>
@@ -131,7 +148,10 @@ const ProductDetails = ({ product, refetch }: any) => {
                         <CiSquarePlus size={22} />
                       </button>
                     </div>
-                    <button className="group py-4 px-5 rounded-full bg-indigo-50 text-indigo-600 font-semibold text-lg w-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-indigo-200">
+                    <button
+                      onClick={() => HandleToCart(product)}
+                      className="group py-4 px-5 rounded-full bg-indigo-50 text-indigo-600 font-semibold text-lg w-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-indigo-200"
+                    >
                       <FaCartPlus />
                       Add to cart
                     </button>

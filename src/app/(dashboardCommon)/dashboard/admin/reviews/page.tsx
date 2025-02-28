@@ -24,14 +24,11 @@ const Page = () => {
     });
     return params;
   }, [searchParams]);
-
-  // Pagination Settings
   const currentPage = Number(searchParams.get("page")) || 1;
   const limit = 5;
-  const skip = (currentPage - 1) * limit;
 
   // Fetching Reviews
-  const { data, isLoading } = useFetchReviewsQuery({ ...filters, limit, skip });
+  const { data, isLoading } = useFetchReviewsQuery({ ...filters, limit });
   const [softDeleteReview] = useSoftDeleteReviewsMutation();
 
   if (isLoading) return <Loading />;
@@ -43,12 +40,9 @@ const Page = () => {
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
-  // Pagination Logic
-  const totalReviews = data?.data?.meta?.total || 0;
-  const totalPages = Math.ceil(totalReviews / limit);
 
   return (
-    <div className="w-full overflow-x-auto border">
+    <div className="w-full overflow-x-auto  mt-6">
       <div className="flex justify-between items-center mb-4">
         <Searching
           onSearch={(value: any) => updateParams("searchTerm", value)}
@@ -107,7 +101,7 @@ const Page = () => {
 
       <Pagination
         currentPage={currentPage}
-        totalPages={totalPages}
+        totalPages={data?.data?.meta?.totalPage}
         onPageChange={(page) => updateParams("page", page.toString())}
       />
     </div>

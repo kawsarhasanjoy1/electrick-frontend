@@ -1,10 +1,13 @@
 "use client";
 import { lcdCategories, statuses } from "@/constance/global";
 import EFrom from "@/form/EFrom";
+import EImage from "@/form/EImage";
 import EInput from "@/form/EInput";
 import ESelect from "@/form/ESelect";
+import useUploadImage from "@/Hooks/useUploadImage";
 import { useCreateBlogMutation } from "@/redux/api/blogApi";
 import { useAppSelector } from "@/redux/hook";
+import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { HiX } from "react-icons/hi";
 import { toast } from "sonner";
@@ -20,18 +23,23 @@ const AddBlogModal = ({
   const [createBlog] = useCreateBlogMutation();
 
   const HandleToSubmit = async (e: FieldValues) => {
-    try {
-      const blogData = { ...e, userId };
-      const res = await createBlog(blogData).unwrap();
-      if (res?.success) {
-        toast.success(res?.message);
-      } else {
-        toast.error("Something went wrong");
+    console.log(e)
+    const res = await useUploadImage(e?.image);
+    if (res?.id) {
+      const image = res?.display_url;
+      try {
+        const blogData = { ...e, userId, image };
+        const res = await createBlog(blogData).unwrap();
+        if (res?.success) {
+          toast.success(res?.message);
+        } else {
+          toast.error("Something went wrong");
+        }
+      } catch (err: any) {
+        toast.error(
+          err?.data?.message ? err?.data?.message : "Something went wrong"
+        );
       }
-    } catch (err: any) {
-      toast.error(
-        err?.data?.message ? err?.data?.message : "Something went wrong"
-      );
     }
   };
 
@@ -59,13 +67,7 @@ const AddBlogModal = ({
                 type="text"
                 required
               />
-              <EInput
-                name="image"
-                label="Image URL"
-                placeholder="Image link"
-                type="text"
-                required
-              />
+
               <ESelect
                 name="category"
                 label="Category"
@@ -86,7 +88,7 @@ const AddBlogModal = ({
                 required
               />
             </div>
-
+            <EImage edit="" label="Image" name="image" required={true} />
             <div className="flex justify-end border-t pt-4 space-x-4">
               <button
                 onClick={() => setIsOpen(false)}

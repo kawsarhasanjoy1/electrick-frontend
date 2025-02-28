@@ -1,6 +1,7 @@
 "use client";
 import { lcdCategories, statuses } from "@/constance/global";
 import EFrom from "@/form/EFrom";
+import EImage from "@/form/EImage";
 import EInput from "@/form/EInput";
 import ESelect from "@/form/ESelect";
 import { useCreateBlogMutation } from "@/redux/api/blogApi";
@@ -61,13 +62,13 @@ const UpdateBlog = ({
                 type="text"
                 required
               />
-              <EInput
+              {/* <EInput
                 name="image"
                 label="Image URL"
                 placeholder="Image link"
                 type="text"
                 required
-              />
+              /> */}
               <ESelect
                 name="category"
                 label="Category"
@@ -88,6 +89,7 @@ const UpdateBlog = ({
                 required
               />
             </div>
+            <EImage name="image" edit="" required={true} label="Image" />
 
             <div className="flex justify-end border-t pt-4 space-x-4">
               <button

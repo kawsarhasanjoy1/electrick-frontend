@@ -295,3 +295,15 @@ export const sortReview = [
   { label: "Newest First", value: "-createdAt" },
   { label: "Oldest First", value: "createdAt" },
 ];
+export const sortProducts = [
+  { label: "High to Low", value: "-price" },
+  { label: "Low to High", value: "price" },
+  { label: "High to Low rating", value: "-rating" },
+  { label: "Low to High rating", value: "rating" },
+  { label: "Newest First", value: "-createdAt" },
+  { label: "Oldest First", value: "createdAt" },
+];
+export const sortBlogs = [
+  { label: "Newest First", value: "-createdAt" },
+  { label: "Oldest First", value: "createdAt" },
+];
